@@ -21,6 +21,7 @@ function Dasboard() {
             </Box>
             <Box sx={{ display: 'flex', gap: 2, justifyContent: 'space-between' }}>
                 <Link to='/Image-Converter'>Image to URL</Link>
+                <Link to='/Deadline'>Deadline</Link>
             </Box>
         </Box>
     );

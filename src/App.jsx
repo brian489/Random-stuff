@@ -8,6 +8,7 @@ import NaughtsAndCrosses from './pages/NaughtsAndCrosses'
 import Worm from './pages/Worm'
 import ImageToUrl from './pages/ConvertToURL'
 import WTFIsThat from './pages/WTFIsThat'
+import Deadline from './pages/Deadline'
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/game2" element= {<Worm />} />
         <Route path="/game3" element= {<WTFIsThat />} />
         <Route path="/Image-Converter" element= {<ImageToUrl />} />
+        <Route path="/Deadline" element= {<Deadline />} />
       </Routes>
     </BrowserRouter>
   )
