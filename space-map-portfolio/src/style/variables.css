@@ -1,0 +1,18 @@
+:root {
+  --bg: #060914;
+  --nebula-1: rgba(60, 20, 120, 0.18);
+  --nebula-2: rgba(10, 60, 140, 0.14);
+  --grid-line: rgba(80, 120, 200, 0.07);
+  --node-complete: #ffffff;
+  --node-wip: #5b8cff;
+  --node-locked: #2a3560;
+  --route-line: rgba(100, 160, 255, 0.25);
+  --route-dash: rgba(100, 160, 255, 0.6);
+  --card-bg: rgba(8, 14, 40, 0.85);
+  --card-border: rgba(80, 130, 255, 0.4);
+  --panel-bg: rgba(6, 10, 28, 0.92);
+  --hud-bg: rgba(4, 8, 22, 0.8);
+  --accent: #4e7fff;
+  --text-primary: #e8eeff;
+  --text-dim: #5a6a9a;
+}

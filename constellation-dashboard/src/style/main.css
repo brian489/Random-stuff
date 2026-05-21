@@ -1,0 +1,288 @@
+@import './variables.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', system-ui, sans-serif;
+  overflow: hidden;
+}
+
+.app {
+  position: fixed;
+  inset: 0;
+}
+
+/* Zoom only scales the constellation layer; never blur stars or background */
+#bg-canvas,
+#main-layer,
+#main-zoom {
+  filter: none;
+}
+
+#stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+#bg-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform: translate(var(--pcx-bg, 0px), var(--pcy-bg, 0px));
+  transition: opacity 0.8s ease;
+  opacity: 0;
+}
+
+#bg-canvas.is-visible {
+  opacity: 1;
+}
+
+#main-layer {
+  position: absolute;
+  inset: 0;
+  transform: translate(var(--pcx-main, 0px), var(--pcy-main, 0px));
+  will-change: transform;
+}
+
+#main-zoom {
+  position: absolute;
+  inset: 0;
+  transform: translate(var(--zoom-tx, 0px), var(--zoom-ty, 0px)) scale(var(--zoom-scale, 1));
+  transform-origin: 0 0;
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+#main-zoom.is-selected {
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#main-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.vignette {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(ellipse 85% 75% at 50% 45%, transparent 30%, rgba(2, 3, 10, 0.65) 100%);
+}
+
+.nebula {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse 70% 55% at 48% 42%,
+    rgba(60, 40, 120, 0.12) 0%,
+    rgba(20, 60, 90, 0.06) 40%,
+    transparent 70%
+  );
+  filter: blur(2px);
+}
+
+#ui-root {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+#ui-root button,
+#ui-root a,
+#ui-root .detail-panel,
+#ui-root .tooltip,
+#ui-root .chrome,
+#ui-root .constellation-title,
+#ui-root .audio-toggle,
+#ui-root .reset-animation-btn {
+  pointer-events: auto;
+}
+
+.reset-animation-btn {
+  position: fixed;
+  top: 0.75rem;
+  right: 1rem;
+  z-index: 8;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.72rem;
+  font-family: inherit;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: rgba(5, 8, 24, 0.75);
+  border: 1px solid rgba(120, 160, 255, 0.35);
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    background 0.2s;
+}
+
+.reset-animation-btn:hover {
+  color: var(--text);
+  border-color: rgba(120, 160, 255, 0.55);
+  background: rgba(20, 30, 60, 0.9);
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 6;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.72rem;
+  background: var(--panel-bg);
+  border: 1px solid rgba(120, 160, 255, 0.25);
+  border-radius: 6px;
+  color: var(--text);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, -120%) scale(0.92);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.tooltip.is-visible {
+  opacity: 1;
+  transform: translate(-50%, -120%) scale(1);
+}
+
+.chrome {
+  position: fixed;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.chrome.is-visible {
+  opacity: 1;
+}
+
+.chrome__title {
+  position: fixed;
+  top: 1.25rem;
+  left: 1.5rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.constellation-title {
+  position: fixed;
+  left: 50%;
+  top: max(0.5rem, 5vh);
+  transform: translateX(-50%);
+  z-index: 2;
+  font-size: clamp(1.15rem, 3.2vw, 1.75rem);
+  font-weight: 300;
+  letter-spacing: 0.55em;
+  text-indent: 0.55em;
+  color: rgba(230, 235, 255, 0.45);
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+  font-family: 'Outfit', sans-serif;
+}
+
+.constellation-title.is-visible {
+  opacity: 1;
+}
+
+.constellation-title span {
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+
+.constellation-title span.is-lit {
+  opacity: 1;
+}
+
+.audio-toggle {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 8;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  border: 1px solid rgba(120, 160, 255, 0.35);
+  background: rgba(5, 8, 24, 0.75);
+  color: var(--star-half);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.5s ease, background 0.2s;
+}
+
+.audio-toggle.is-visible {
+  opacity: 1;
+}
+
+.audio-toggle:hover {
+  background: rgba(20, 30, 60, 0.9);
+}
+
+.audio-toggle.is-on {
+  color: var(--accent);
+  box-shadow: 0 0 16px rgba(78, 127, 255, 0.35);
+}
+
+.audio-panel {
+  position: fixed;
+  bottom: 3.5rem;
+  right: 1rem;
+  z-index: 8;
+  padding: 0.5rem 0.75rem;
+  background: var(--panel-bg);
+  border: 1px solid rgba(120, 160, 255, 0.2);
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.audio-panel.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.audio-panel label {
+  display: block;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.audio-panel input[type='range'] {
+  width: 120px;
+}
+
+@media (max-width: 640px) {
+  .chrome__title {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+  }
+}

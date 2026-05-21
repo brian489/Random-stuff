@@ -1,0 +1,123 @@
+@import './variables.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  overflow: hidden;
+}
+
+#app {
+  position: fixed;
+  inset: 0;
+}
+
+#canvas-wrap {
+  position: absolute;
+  inset: 0;
+  transform-origin: 0 0;
+  transition:
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.45s ease;
+  will-change: transform, filter;
+}
+
+#canvas-wrap.is-zoomed {
+  filter: blur(2px);
+}
+
+#game-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+#canvas-wrap .zoom-focus {
+  filter: none !important;
+}
+
+#ui-root {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+#ui-root .detail-panel,
+#ui-root .gallery-controls button,
+#ui-root .progress-dots {
+  pointer-events: auto;
+}
+
+.gallery-controls {
+  position: fixed;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 6;
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: 200px;
+}
+
+.gallery-controls button {
+  border: 1px solid rgba(196, 163, 90, 0.4);
+  background: rgba(30, 28, 24, 0.85);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 0.35rem 0.5rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.gallery-controls button:hover {
+  background: rgba(50, 46, 40, 0.95);
+}
+
+.gallery-controls button.is-on {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+body.night-mode #canvas-wrap:not(.is-zoomed) {
+  filter: brightness(0.38) contrast(1.08);
+}
+
+body.night-mode .neon-boost {
+  filter: brightness(1.35) saturate(1.2);
+}
+
+.progress-dots {
+  position: fixed;
+  bottom: 0.65rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.35rem;
+  z-index: 4;
+  padding: 0.25rem 0.5rem;
+  background: rgba(20, 18, 16, 0.5);
+  border-radius: 999px;
+}
+
+.progress-dots span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: transform 0.2s ease, background 0.2s;
+}
+
+.progress-dots span.is-active {
+  background: var(--accent);
+  transform: scale(1.35);
+}

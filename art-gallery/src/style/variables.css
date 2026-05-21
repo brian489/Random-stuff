@@ -1,0 +1,13 @@
+:root {
+  --bg: #1a1814;
+  --wall: #d4cfc4;
+  --wall-dark: #b8b0a2;
+  --floor: #3d2e22;
+  --floor-line: #2a1f16;
+  --gold: #c4a35a;
+  --text: #f5f2ea;
+  --text-muted: rgba(245, 242, 234, 0.55);
+  --panel-bg: rgba(22, 20, 18, 0.92);
+  --accent: #c4a35a;
+  --night-filter: brightness(0.35) contrast(1.05);
+}

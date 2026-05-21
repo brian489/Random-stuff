@@ -1,0 +1,13 @@
+:root {
+  --bg: #04050f;
+  --star-complete: #ffffff;
+  --star-half: #7ba3d4;
+  --star-wip: #3a4a6b;
+  --star-inactive: #1a2035;
+  --line-color: rgba(120, 160, 255, 0.35);
+  --line-glow: rgba(120, 160, 255, 0.08);
+  --accent: #4e7fff;
+  --panel-bg: rgba(5, 8, 24, 0.85);
+  --text: #e8ecff;
+  --text-muted: rgba(232, 236, 255, 0.55);
+}
