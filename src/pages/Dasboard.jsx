@@ -18,6 +18,7 @@ function Dasboard() {
                 <Link to='/game1'>X & 0</Link>
                 <Link to='/game2'>Worm</Link>
                 <Link to='/game3'>WTF is that</Link>
+                <Link to='/game4'>Procedural Generation Test</Link>
             </Box>
             <Box sx={{ display: 'flex', gap: 2, justifyContent: 'space-between' }}>
                 <Link to='/Image-Converter'>Image to URL</Link>

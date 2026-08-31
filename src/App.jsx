@@ -9,6 +9,7 @@ import Worm from './pages/Worm'
 import ImageToUrl from './pages/ConvertToURL'
 import WTFIsThat from './pages/WTFIsThat'
 import Deadline from './pages/Deadline'
+import ProceduralGenTest from './pages/ProceduralGenTest'
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/game1" element= {<NaughtsAndCrosses />} />
         <Route path="/game2" element= {<Worm />} />
         <Route path="/game3" element= {<WTFIsThat />} />
+        <Route path="/game4" element= {<ProceduralGenTest />} />
         <Route path="/Image-Converter" element= {<ImageToUrl />} />
         <Route path="/Deadline" element= {<Deadline />} />
       </Routes>
